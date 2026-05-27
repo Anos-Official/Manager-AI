@@ -13,7 +13,6 @@ toggled = False
 #--window--
 app = ctk.CTk()
 app.title("Manager AI")
-app.state("zoomed")
 app.geometry("900x600")
 app.iconbitmap("icon.ico")
 app.configure(fg_color="#323339")
@@ -169,4 +168,6 @@ profile_btn = ctk.CTkButton(profile_border, anchor="w", image=user_icon, text=f"
 profile_btn.pack(side="left")
 
 dashboardframe.pack(side = "right", fill = "both", expand = "true")
+
+app.after(1, app.wm_state, "zoomed")
 app.mainloop()
