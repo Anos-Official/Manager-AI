@@ -7,17 +7,24 @@ from groq import Groq
 client = Groq(api_key=GROQ_API_KEY)
 
 def search_web(query):
-    response = requests.get(
-        "https://google.serper.dev/search",
-        headers={"X-API-KEY": SERPER_API_KEY},
-        json={"q": query}
-    )
-    results = response.json()["organic"]
-    # extract top 3 results as text
-    context = ""
-    for r in results[:3]:
-        context += f"{r['title']}: {r['snippet']}\n"
-    return context
+    try:
+        response = requests.post(
+    "https://google.serper.dev/search",
+    headers={
+        "X-API-KEY": SERPER_API_KEY,
+        "Content-Type": "application/json"
+        },
+    json={"q": query}
+        )
+        data = response.json()
+        results = data.get("organic", [])
+        context = ""
+        for r in results[:3]:
+            context += f"{r['title']}: {r['snippet']}\n"
+        return context
+    except Exception as e:
+        print(f"search_web error: {e}")
+        return ""
 
 def needs_search(prompt):
     decision = client.chat.completions.create(
@@ -28,11 +35,12 @@ def needs_search(prompt):
         ],
         temperature=0
     )
-    result = decision.choices[0].message.content.strip().lower()
-    print(f"needs_search: {result}")  # debug
+    result = decision.choices[0].message.content
+    result = re.sub(r'<think>.*?</think>', '', result, flags=re.DOTALL).strip()
+    print(f"needs_search: {result}")
     return result == "yes"
 
-def ask_ai(prompt):
+def ask_ai(prompt, system_prompt="You are Manager AI, a personal productivity assistant."):
     try:
         context = ""
         if needs_search(prompt):
@@ -41,8 +49,11 @@ def ask_ai(prompt):
         full_prompt = f"{prompt}\n\nCurrent information:\n{context}" if context else prompt
         
         response = client.chat.completions.create(
-            model="qwen/qwen3-32b",
-            messages=[{"role": "user", "content": full_prompt}],
+            model="llama-3.3-70b-versatile",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": full_prompt}
+                ],
             temperature=1,
             max_completion_tokens=4096
         )
