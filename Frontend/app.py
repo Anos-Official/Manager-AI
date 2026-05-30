@@ -6,6 +6,7 @@ import Frontend.pages.assistant as ass
 import Frontend.pages.career as car
 import Frontend.pages.course as cou
 import Frontend.pages.profile as pro
+import Frontend.pages.budget as bud
 import pyglet
 
 toggled = False
@@ -23,6 +24,7 @@ assistantframe = ass.create(app)
 careerframe = car.create(app)
 courseframe = cou.create(app)
 profileframe = pro.create(app)
+budgetframe = bud.create(app)
 
 #--Important Assets--
 pyglet.font.add_file("Assets/Fonts/Nunito.ttf")
@@ -37,7 +39,8 @@ home = ctk.CTkImage(img.open("Assets/Icons/Home.png"), size=(30,30))
 assist = ctk.CTkImage(img.open("Assets/Icons/Assist.png"), size=(30,30))
 job = ctk.CTkImage(img.open("Assets/Icons/Job.png"), size=(30,30))
 task_icon = ctk.CTkImage(img.open("Assets/Icons/tasks.png"), size=(30,30))
-course = ctk.CTkImage(img.open("Assets/Icons/Course.png"), size=(30,30))
+course_icon = ctk.CTkImage(img.open("Assets/Icons/Course.png"), size=(30,30))
+budget_icon = ctk.CTkImage(img.open("Assets/Icons/budget.png"), size=(30,30))
 settings_icon = ctk.CTkImage(img.open("Assets/Icons/settings.png"), size=(30,30))
 help_icon = ctk.CTkImage(img.open("Assets/Icons/help.png"), size=(30,30))
 user_icon = ctk.CTkImage(img.open("Assets/Icons/user.png"), size=(50,50))
@@ -69,6 +72,7 @@ def toggle_sidebar():
         career_btn.configure(text="Career & Job Opportunities", width=270)
         task_btn.configure(text="Tasks & Goals", width=270)
         course_btn.configure(text="Courses & Study Guide", width=270)
+        budget_btn.configure(text="Budget Tracker", width=270)
         profile_btn.configure(text=f"{User}\n{email}", width=270)
         user_icon.configure(size=(50,50))
         toggled = False
@@ -80,56 +84,61 @@ def toggle_sidebar():
         career_btn.configure(text="", width=40)
         task_btn.configure(text="", width=40)
         course_btn.configure(text="", width=40)
+        budget_btn.configure(text="", width=40)
         profile_btn.configure(text="", width=40)
         user_icon.configure(size=(40,40))
         toggled = True
 
 def reset():
-    dashboard_btn.configure(fg_color = "transparent")
+    dashboard_btn.configure(fg_color="transparent")
     dashboardframe.pack_forget()
-    assistant_btn.configure(fg_color = "transparent")
+    assistant_btn.configure(fg_color="transparent")
     assistantframe.pack_forget()
-    career_btn.configure(fg_color = "transparent")
+    career_btn.configure(fg_color="transparent")
     careerframe.pack_forget()
-    task_btn.configure(fg_color = "transparent")
+    task_btn.configure(fg_color="transparent")
     taskframe.pack_forget()
-    course_btn.configure(fg_color = "transparent")
+    course_btn.configure(fg_color="transparent")
     courseframe.pack_forget()
-    profile_btn.configure(fg_color = "transparent")
+    budget_btn.configure(fg_color="transparent")
+    budgetframe.pack_forget()
+    profile_btn.configure(fg_color="transparent")
     profileframe.pack_forget()
-
-def switchtotask():
-    reset()
-    task_btn.configure(fg_color="#121212")
-    taskframe.pack(side = "right", fill="both", expand = "true")
 
 def switchtodash():
     reset()
     dashboard_btn.configure(fg_color="#121212")
-    dashboardframe.pack(side = "right", fill="both", expand = "true")
-
+    dashboardframe.pack(side="right", fill="both", expand=True)
 
 def switchtoass():
     reset()
     assistant_btn.configure(fg_color="#121212")
-    assistantframe.pack(side = "right", fill="both", expand = "true")
+    assistantframe.pack(side="right", fill="both", expand=True)
 
 def switchtocar():
     reset()
     career_btn.configure(fg_color="#121212")
-    careerframe.pack(side = "right", fill="both", expand = "true")
+    careerframe.pack(side="right", fill="both", expand=True)
 
+def switchtotask():
+    reset()
+    task_btn.configure(fg_color="#121212")
+    taskframe.pack(side="right", fill="both", expand=True)
 
 def switchtocou():
     reset()
     course_btn.configure(fg_color="#121212")
-    courseframe.pack(side = "right", fill="both", expand = "true")
+    courseframe.pack(side="right", fill="both", expand=True)
+
+def switchtobud():
+    reset()
+    budget_btn.configure(fg_color="#121212")
+    budgetframe.pack(side="right", fill="both", expand=True)
 
 def switchtopro():
     reset()
     profile_btn.configure(fg_color="#121212")
-    profileframe.pack(side = "right", fill="both", expand = "true")
-
+    profileframe.pack(side="right", fill="both", expand=True)
 
 #--UI--
 sidebar_btn = ctk.CTkButton(minibar, image=sideclose, text="", width=30, fg_color="transparent", hover_color="#121212", command=toggle_sidebar)
@@ -156,8 +165,11 @@ career_btn.pack(side="top", padx=4, pady=1)
 task_btn = ctk.CTkButton(sidebar, image=task_icon, anchor="w", text="Tasks & Goals", width=270, fg_color="transparent", hover_color="#121212", font=ctk.CTkFont(family="Nunito", size=16, weight="bold"), command=switchtotask)
 task_btn.pack(side="top", padx=4, pady=1)
 
-course_btn = ctk.CTkButton(sidebar, image=course, anchor="w", text="Courses & Study Guide", width=270, fg_color="transparent", hover_color="#121212", font=ctk.CTkFont(family="Nunito", size=16, weight="bold"), command=switchtocou)
+course_btn = ctk.CTkButton(sidebar, image=course_icon, anchor="w", text="Courses & Study Guide", width=270, fg_color="transparent", hover_color="#121212", font=ctk.CTkFont(family="Nunito", size=16, weight="bold"), command=switchtocou)
 course_btn.pack(side="top", padx=4, pady=1)
+
+budget_btn = ctk.CTkButton(sidebar, image=budget_icon, anchor="w", text="Budget Tracker", width=270, fg_color="transparent", hover_color="#121212", font=ctk.CTkFont(family="Nunito", size=16, weight="bold"), command=switchtobud)
+budget_btn.pack(side="top", padx=4, pady=1)
 
 #--profile--
 profile_border = ctk.CTkFrame(sidebar, width=250, height=70, fg_color="#393A3F")
@@ -167,7 +179,7 @@ profile_border.pack_propagate(False)
 profile_btn = ctk.CTkButton(profile_border, anchor="w", image=user_icon, text=f"{User}\n{email}", width=270, height=67, fg_color="#2C2D32", hover_color="#121212", font=ctk.CTkFont(family="Nunito", size=16, weight="bold"), command=switchtopro)
 profile_btn.pack(side="left")
 
-dashboardframe.pack(side = "right", fill = "both", expand = "true")
+dashboardframe.pack(side="right", fill="both", expand=True)
 
 app.after(1, app.wm_state, "zoomed")
 app.mainloop()
