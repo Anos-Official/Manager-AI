@@ -1,4 +1,5 @@
 from PIL import Image as img
+
 import customtkinter as ctk
 import Frontend.pages.task as task
 import Frontend.pages.dashboard as dash
@@ -7,7 +8,11 @@ import Frontend.pages.career as car
 import Frontend.pages.course as cou
 import Frontend.pages.profile as pro
 import Frontend.pages.budget as bud
+import Frontend.pages.settings as settings_page
+
 import pyglet
+import webbrowser
+
 
 toggled = False
 
@@ -17,14 +22,6 @@ app.title("Manager AI")
 app.geometry("900x600")
 app.iconbitmap("icon.ico")
 app.configure(fg_color="#323339")
-
-taskframe = task.create(app)
-dashboardframe = dash.create(app)
-assistantframe = ass.create(app)
-careerframe = car.create(app)
-courseframe = cou.create(app)
-profileframe = pro.create(app)
-budgetframe = bud.create(app)
 
 #--Important Assets--
 pyglet.font.add_file("Assets/Fonts/Nunito.ttf")
@@ -140,6 +137,21 @@ def switchtopro():
     profile_btn.configure(fg_color="#121212")
     profileframe.pack(side="right", fill="both", expand=True)
 
+
+taskframe = task.create(app)
+dashboardframe = dash.create(app, {
+    "career": switchtocar,
+    "budget": switchtobud,
+    "tasks": switchtotask,
+    "study": switchtocou
+})
+assistantframe = ass.create(app)
+careerframe = car.create(app)
+courseframe = cou.create(app)
+profileframe = pro.create(app)
+budgetframe = bud.create(app)
+
+
 #--UI--
 sidebar_btn = ctk.CTkButton(minibar, image=sideclose, text="", width=30, fg_color="transparent", hover_color="#121212", command=toggle_sidebar)
 sidebar_btn.pack(side="left")
@@ -147,10 +159,10 @@ sidebar_btn.pack(side="left")
 welcome_lbl = ctk.CTkLabel(minibar, image=icon, text=f"Welcome {User}", compound="left", font=ctk.CTkFont(family="Nunito", size=30, weight="bold"))
 welcome_lbl.pack(side="left", expand=True)
 
-settings_btn = ctk.CTkButton(minibar, image=settings_icon, text="", width=30, fg_color="transparent", hover_color="#121212")
+settings_btn = ctk.CTkButton(minibar, image=settings_icon, text="", width=30, fg_color="transparent", hover_color="#121212",command=lambda: settings_page.open_settings(app))
 settings_btn.pack(side="right")
 
-help_btn = ctk.CTkButton(minibar, image=help_icon, text="", width=30, fg_color="transparent", hover_color="#121212")
+help_btn = ctk.CTkButton(minibar, image=help_icon, text="", width=30, fg_color="transparent", hover_color="#121212",command=lambda: webbrowser.open("https://your-help-url.com"))
 help_btn.pack(side="right", padx=1)
 
 dashboard_btn = ctk.CTkButton(sidebar, image=home, anchor="w", text="Dashboard", width=270, fg_color="transparent", hover_color="#121212", font=ctk.CTkFont(family="Nunito", size=16, weight="bold"), command=switchtodash)
