@@ -9,6 +9,9 @@ import Frontend.pages.course as cou
 import Frontend.pages.profile as pro
 import Frontend.pages.budget as bud
 import Frontend.pages.settings as settings_page
+import tkinter as tk
+import sys
+import os
 
 import pyglet
 import webbrowser
@@ -22,6 +25,15 @@ app.title("Manager AI")
 app.geometry("900x600")
 app.iconbitmap("icon.ico")
 app.configure(fg_color="#323339")
+
+
+if getattr(sys, 'frozen', False):
+    base_path = sys._MEIPASS
+else:
+    base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+icon_path = os.path.join(base_path, "icon.ico")
+app.after(200, lambda: app.iconbitmap(icon_path))
 
 #--Important Assets--
 pyglet.font.add_file("Assets/Fonts/Nunito.ttf")
