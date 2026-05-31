@@ -162,7 +162,7 @@ welcome_lbl.pack(side="left", expand=True)
 settings_btn = ctk.CTkButton(minibar, image=settings_icon, text="", width=30, fg_color="transparent", hover_color="#121212",command=lambda: settings_page.open_settings(app))
 settings_btn.pack(side="right")
 
-help_btn = ctk.CTkButton(minibar, image=help_icon, text="", width=30, fg_color="transparent", hover_color="#121212",command=lambda: webbrowser.open("https://your-help-url.com"))
+help_btn = ctk.CTkButton(minibar, image=help_icon, text="", width=30, fg_color="transparent", hover_color="#121212",command=lambda: webbrowser.open("https://anos-official.github.io/Manager-AI/"))
 help_btn.pack(side="right", padx=1)
 
 dashboard_btn = ctk.CTkButton(sidebar, image=home, anchor="w", text="Dashboard", width=270, fg_color="transparent", hover_color="#121212", font=ctk.CTkFont(family="Nunito", size=16, weight="bold"), command=switchtodash)
