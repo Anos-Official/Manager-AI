@@ -63,10 +63,13 @@ def get_skills_gap(career_goal, current_skills, resume_path=None):
         profile = ""
         if resume_path:
             profile = f"\n\nResume data:\n{read_resume(resume_path)}"
-        prompt = f"""Skills gap analysis for someone who wants to be a {career_goal} in Canada.
-        They currently know: {current_skills}
-        Show: what skills are missing, priority order to learn them, estimated time per skill, 
-        recommended resources for each skill.{profile}"""
+        prompt = f"""List ONLY the missing technical skills needed to become a {career_goal} in Canada.
+        Current skills: {current_skills}
+        Return ONLY a numbered list of skills, nothing else. No descriptions, no headers, just skill names.
+        Example format:
+        1. Python
+        2. SQL
+        3. Docker{profile}"""
         roadmap_data = search_career_roadmap(career_goal)
         return ask_ai(prompt + f"\n\nIndustry data:\n{roadmap_data}", system_prompt=CAREER_SYSTEM_PROMPT)
     except Exception as e:
