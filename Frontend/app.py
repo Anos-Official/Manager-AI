@@ -23,7 +23,6 @@ toggled = False
 app = ctk.CTk()
 app.title("Manager AI")
 app.geometry("900x600")
-app.iconbitmap("icon.ico")
 app.configure(fg_color="#323339")
 
 
@@ -32,27 +31,28 @@ if getattr(sys, 'frozen', False):
 else:
     base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+
 icon_path = os.path.join(base_path, "icon.ico")
 app.after(200, lambda: app.iconbitmap(icon_path))
 
 #--Important Assets--
-pyglet.font.add_file("Assets/Fonts/Nunito.ttf")
+pyglet.font.add_file(os.path.join(base_path, "Assets/Fonts/Nunito.ttf"))
 
 email = "123@gmailhtml.com"
 User = "Mr. Scott"
 
-icon = ctk.CTkImage(img.open("Assets/img/img icon.png"), size=(50,50))
-sideclose = ctk.CTkImage(img.open("Assets/Icons/sidebar.png"), size=(30,30))
-sideopen = ctk.CTkImage(img.open("Assets/Icons/sidebar2.png"), size=(30,30))
-home = ctk.CTkImage(img.open("Assets/Icons/Home.png"), size=(30,30))
-assist = ctk.CTkImage(img.open("Assets/Icons/Assist.png"), size=(30,30))
-job = ctk.CTkImage(img.open("Assets/Icons/Job.png"), size=(30,30))
-task_icon = ctk.CTkImage(img.open("Assets/Icons/tasks.png"), size=(30,30))
-course_icon = ctk.CTkImage(img.open("Assets/Icons/Course.png"), size=(30,30))
-budget_icon = ctk.CTkImage(img.open("Assets/Icons/budget.png"), size=(30,30))
-settings_icon = ctk.CTkImage(img.open("Assets/Icons/settings.png"), size=(30,30))
-help_icon = ctk.CTkImage(img.open("Assets/Icons/help.png"), size=(30,30))
-user_icon = ctk.CTkImage(img.open("Assets/Icons/user.png"), size=(50,50))
+icon = ctk.CTkImage(img.open(os.path.join(base_path, "Assets/img/img icon.png")), size=(50,50))
+sideclose = ctk.CTkImage(img.open(os.path.join(base_path, "Assets/Icons/sidebar.png")), size=(30,30))
+sideopen = ctk.CTkImage(img.open(os.path.join(base_path, "Assets/Icons/sidebar2.png")), size=(30,30))
+home = ctk.CTkImage(img.open(os.path.join(base_path, "Assets/Icons/Home.png")), size=(30,30))
+assist = ctk.CTkImage(img.open(os.path.join(base_path, "Assets/Icons/Assist.png")), size=(30,30))
+job = ctk.CTkImage(img.open(os.path.join(base_path, "Assets/Icons/Job.png")), size=(30,30))
+task_icon = ctk.CTkImage(img.open(os.path.join(base_path, "Assets/Icons/tasks.png")), size=(30,30))
+course_icon = ctk.CTkImage(img.open(os.path.join(base_path, "Assets/Icons/Course.png")), size=(30,30))
+budget_icon = ctk.CTkImage(img.open(os.path.join(base_path, "Assets/Icons/budget.png")), size=(30,30))
+settings_icon = ctk.CTkImage(img.open(os.path.join(base_path, "Assets/Icons/settings.png")), size=(30,30))
+help_icon = ctk.CTkImage(img.open(os.path.join(base_path, "Assets/Icons/help.png")), size=(30,30))
+user_icon = ctk.CTkImage(img.open(os.path.join(base_path, "Assets/Icons/user.png")), size=(50,50))
 
 #--minibar--
 minibar_border = ctk.CTkFrame(app, height=40, corner_radius=0, fg_color="#393A3F")
